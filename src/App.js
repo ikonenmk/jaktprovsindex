@@ -5,13 +5,15 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Button from "../src/components/Button";
-
+import Search from "../src/components/Search";
 function App() {
     return (
 			<Routes>
 				<Route path="/" element={< Home />} />
 				<Route path="/about" element={< About />} />
 				<Route path="/contact" element={< Contact />} />
+				<Route path="/button" element={< Button />} />
+				<Route path="/search" element={< Search /> } />
 			</Routes>
     );
 }

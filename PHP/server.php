@@ -1,9 +1,16 @@
 <?php
 	//Tillåt anslutning från samtliga
 	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: *");
+	
+	//Konvertera $_POST från JSON string till php värden
+	$_POST = json_decode(file_get_contents("php://input"),true);
 
-	//Sätt regnr till input
-	$regnr = $_POST['name'];
+	//sätt regnr och namn till input
+	$regnr = $_POST['regnr'];
+	$namn = $_POST['namn'];
+	//$regnr = "SE27828/2018";//$_POST['regnr'];
+	$namn = "test";//$_POST['namn'];
 		//Skapa anslutning till databas
 	$servername = "atlas.dsv.su.se";
 	$username = "usr_21321852";
@@ -17,19 +24,44 @@
 	}
 
 	//Prepared statement som skickas till db
-	if($stmt = $conn->prepare("SELECT sok, skall FROM prov WHERE hund_regnr=?")) {
+	if($stmt = $conn->prepare("SELECT id, sok, skall, datum FROM prov WHERE hund_regnr=?")) {
 		//Bind input som parameter
 		$stmt->bind_param("s",$regnr);
 		//Genomför statement
 		$stmt->execute();
 
 		//bind resultat-variabler till prepared statement
-		$stmt->bind_result($sok, $skall);
+		$stmt->bind_result($id, $sok, $skall, $datum);
 
-		//hämta variabler och skriv ut
+		//Lägg samtliga prov som json-objekt i array
+		$responseArray = array();
+		
 		while ($stmt->fetch()) {
-			printf("Sök: %s Skall: %s\n", $sok, $skall);
+			$data = array("id" => $id, "sok" => $sok, "skall" => $skall, "datum" => $datum);
+
+			//header("Content-Type: application/json");
+			array_push($responseArray, $data);
+			
+			/*
+			$jsonArray = array();
+			$jsonArray[] = array("id" => $id, "sok" => $sok, "skall" => $skall, "datum" => $datum);
+			
+
+			
+			$jsonArray = [
+				[
+					"id" => $id,
+					"sok" => $sok,
+					"skall" => $skall,
+					"datum" => $datum,
+				]
+			];
+			$compactJsonString = json_encode($jsonArray);
+			echo $compactJsonString;
+			//printf("%s", $compactJsonString);
+			//printf("Sok: %s Skall: %s\n", $sok, $skall); */
 		}
+		echo json_encode($responseArray);
 		
 	}
 ?>
