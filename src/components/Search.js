@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
@@ -7,10 +7,32 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 const Search = () => {
 
+    //Hämta medeltal
+    const [medeltal, setMedeltal] = useState("");
+    useEffect(() => {
+        axios
+            .post("http://localhost:8000/calculations.php")
+            .then((response) => {
+                console.log(response);
+                setMedeltal(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+
+    });
+
+
+    const testGetter = (params) => {
+        console.log();
+        return params.row.sok - medeltal;
+    };
+
     const columns: GridColDef[] = [
         { field: 'datum', headerName: 'Datum', width: 150 },
         { field: 'sok', headerName: 'Sök', width: 150 },
         { field: 'skall', headerName: 'Skall', width: 150 },
+        { field: 'poangSok', headerName: 'Poang over medel', width: 150, valueGetter: testGetter },
     ];
 
     const [displayData, setDisplayData] = useState([]);
@@ -45,6 +67,8 @@ const Search = () => {
                 console.log(error);
             });
     };
+
+
 
     return (
         <>

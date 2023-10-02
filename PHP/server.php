@@ -1,5 +1,5 @@
 <?php
-	//Tillåt anslutning från samtliga
+	//Tillåt anslutning från samtliga med headers
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Headers: *");
 	
@@ -35,32 +35,11 @@
 
 		//Lägg samtliga prov som json-objekt i array
 		$responseArray = array();
-		
 		while ($stmt->fetch()) {
 			$data = array("id" => $id, "sok" => $sok, "skall" => $skall, "datum" => $datum);
-
-			//header("Content-Type: application/json");
 			array_push($responseArray, $data);
-			
-			/*
-			$jsonArray = array();
-			$jsonArray[] = array("id" => $id, "sok" => $sok, "skall" => $skall, "datum" => $datum);
-			
-
-			
-			$jsonArray = [
-				[
-					"id" => $id,
-					"sok" => $sok,
-					"skall" => $skall,
-					"datum" => $datum,
-				]
-			];
-			$compactJsonString = json_encode($jsonArray);
-			echo $compactJsonString;
-			//printf("%s", $compactJsonString);
-			//printf("Sok: %s Skall: %s\n", $sok, $skall); */
 		}
+		//Returnera array med json objekt
 		echo json_encode($responseArray);
 		
 	}
