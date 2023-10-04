@@ -10,13 +10,14 @@
 	$password = "321852";
 	$db_name = "db_21321852";
 	$conn = new mysqli($servername, $username, $password, $db_name);
-
+	
 	//Kontrollera om anslutningen upprättats
 	if ($conn->connect_error) {
 	  die("Connection failed: " . $conn->connect_error);
 	}
 
-	//Hämta alla prov
+	//Funktion för att returnera medeltal för samtliga prov
+	
 	//Prepared statement
 	if($stmt = $conn->prepare("SELECT * FROM prov")) {
 
@@ -36,8 +37,13 @@
 		}
 
 		$medelSok = $summaSok / $antalProv;
+		$medelSkall = $summaSkall / $antalProv;
+		
+		$medeltal = array('medelSok' => $medelSok, 'medelSkall' => $medelSkall);
+	
 
-		echo $medelSok;
+		header('Content-type: application/json');
+		echo json_encode($medeltal);
 		
 	}
 

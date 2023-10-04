@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-
+import { RankCheckbox } from "./RankCheckbox";
 
 
 
 const Search = () => {
 
     //Hämta medeltal
-    const [medeltal, setMedeltal] = useState("");
+    const [medeltalSok, setMedeltalSok] = useState("");
+    const [medeltalSkall, setMedeltalSkall] = useState("");
+
     useEffect(() => {
         axios
-            .post("http://localhost:8000/calculations.php")
+            .post("http://localhost:8000/calculateMedeltal.php")
             .then((response) => {
                 console.log(response);
-                setMedeltal(response.data);
+                setMedeltalSok(response.data.medelSok);
+                setMedeltalSkall(response.data.medelSkall);
             })
             .catch((error) => {
                 console.log(error);
@@ -23,16 +26,35 @@ const Search = () => {
     });
 
 
-    const testGetter = (params) => {
+    const sokGetter = (params) => {
         console.log();
-        return params.row.sok - medeltal;
+        return params.row.sok - medeltalSok;
+    };
+
+    const skallGetter = (params) => {
+        console.log();
+        return params.row.skall - medeltalSkall;
+    };
+
+    const rankGetter = (params) => {
+        console.log();
+        var returnValue;
+        var skall = "checked";
+        if (skall == "checked") {
+            returnValue = "1";
+        } else {
+            returnValue = "0";
+        }
+        return returnValue;
     };
 
     const columns: GridColDef[] = [
         { field: 'datum', headerName: 'Datum', width: 150 },
         { field: 'sok', headerName: 'Sök', width: 150 },
         { field: 'skall', headerName: 'Skall', width: 150 },
-        { field: 'poangSok', headerName: 'Poang over medel', width: 150, valueGetter: testGetter },
+        { field: 'poangSok', headerName: 'Sokpoang over medel', width: 150, valueGetter: sokGetter },
+        { field: 'poangSkall', headerName: 'Skallpoang over medel', width: 150, valueGetter: skallGetter },
+        { field: 'ranking', headerName: 'Ranking', width: 150, valueGetter: rankGetter },
     ];
 
     const [displayData, setDisplayData] = useState([]);
@@ -68,8 +90,6 @@ const Search = () => {
             });
     };
 
-
-
     return (
         <>
         <form onSubmit={handleSubmit}>
@@ -91,9 +111,11 @@ const Search = () => {
                     onChange={handleInputChange}
                 />
             </div>
-            <button type="submit">Submit</button>
-            <div></div>
+                <button type="submit">Submit</button>
             </form>
+            <div>
+                <RankCheckbox />
+            </div>
 
             <div style={{ height: 300, width: '100%' }}>
                 <DataGrid rows={rows} columns={columns} />
