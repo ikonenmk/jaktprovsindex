@@ -54,7 +54,7 @@ const Search = () => {
         { field: 'skall', headerName: 'Skall', width: 150 },
         { field: 'poangSok', headerName: 'Sokpoang over medel', width: 150, valueGetter: sokGetter },
         { field: 'poangSkall', headerName: 'Skallpoang over medel', width: 150, valueGetter: skallGetter },
-        { field: 'ranking', headerName: 'Ranking', width: 150, valueGetter: rankGetter },
+        //{ field: 'ranking', headerName: 'Ranking', width: 150, valueGetter: rankGetter },
     ];
 
     const [displayData, setDisplayData] = useState([]);
