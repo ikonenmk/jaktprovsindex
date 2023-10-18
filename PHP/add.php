@@ -9,10 +9,10 @@ $skall = 2;
 $datum = "2023-08-29";
 
 // Skapa anslutning
-$servername = "atlas.dsv.su.se";
-$username = "usr_21321852";
-$password = "321852";
-$db_name = "db_21321852";
+	$servername = "127.0.0.1";//"atlas.dsv.su.se";
+	$username = "root";//"usr_21321852";
+	$password = "#MyS4KOisaT1KK4";//"321852";
+	$db_name = "db_21321852";
 $conn = new mysqli($servername, $username, $password, $db_name);
 
 if($conn->connect_error) {
