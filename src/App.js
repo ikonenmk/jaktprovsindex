@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import Add from "./components/Add";
 import Button from "../src/components/Button";
 import Search from "../src/components/Search";
 import Accordion from "../src/components/Accordion";
+import AllDogs from "../src/components/AllDogs";
 function App() {
     return (
 			<Routes>
@@ -13,7 +15,10 @@ function App() {
 			<Route path="/add" element={< Add />} />
 				<Route path="/button" element={< Button />} />
 			<Route path="/search" element={< Search />} />
-			<Route path="/accordion" elemet={< Accordion />}/>
+			<Route path="/accordion" element={< Accordion />} />
+
+			<Route path="/alldogs" element={< AllDogs />} />
+
 			</Routes>
     );
 }

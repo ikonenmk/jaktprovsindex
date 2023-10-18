@@ -1,35 +1,42 @@
 import React from 'react';
 import { useState } from "react";
 
-// Array innehållandes alla möjliga värden användaren kan välja för att generera ranking
-const userChoices = [
-	{ name: "Sok", checked: false},
-	{ name: "Skall", checked: false },
-];
 
-export const RankCheckbox = () => {
-	const [checkedState, setCheckedState] = useState(
-		new Array(userChoices.length).fill(false) //Skapar en array motsvarande antalet userChoices varje position sätts till false
-	);
 
-	// Handler för klick i checkbox, tar emot index från checkbox
-	const checkHandler = (position) => {
-		const updatedCheckedState = checkedState.map((item, index) => {
-			if (index === position) { // Hitta rätt position i arrayen (= index)
-				return !item; //returnera motsatt värde (true/false => checked/unchecked)
+export const RankCheckbox = ({ onCheckChange }) => {
+
+	// Array innehållandes alla möjliga värden användaren kan välja för att generera ranking
+	const [userChoices, setUserChoices] = useState([
+		{ name: "sok", value: false },
+		{ name: "skall", value: false },
+	]);
+
+	
+	// Handler för klick i checkbox
+	const checkHandler = (boxName) => {
+			const updatedCheckedState = userChoices.map((item) => {
+				if (item.name === boxName) {						//Hitta rätt element i arrayen
+					if (item.value == false) {						//Kontrollera värde och invertera
+						item.value = true;
+					} else {
+						item.value = false;
+					}
+					return item; //returnera uppdaterat element 
+				
 			} else {
-				return item; //returnera oförändrat värde för övriga positioner
+				return item; //returnera oförändrat element
 			}
-
 		}
 		);
-		setCheckedState(updatedCheckedState);
+		console.log(updatedCheckedState);
+		setUserChoices(updatedCheckedState);			//Uppdatera child (detta) state med den nya arrayen
+		onCheckChange(updatedCheckedState);				//Uppdatera parent (Search) state
 	}
 	return (
 			<div>
-			{userChoices.map(({name}, index) => (
+			{userChoices.map((item, index) => (
 				<React.Fragment key={index}>
-					<input type="checkbox" id={`checkbox-${index}`} checked={checkedState[index]} onChange={() => checkHandler(index)} /><label htmlFor={`checkbox-${index}`}> {name}</label>
+					<input type="checkbox" id={`checkbox-${index}`} checked={item.value} onChange={() => checkHandler(item.name)} /><label htmlFor={`checkbox-${index}`}> {item.name}</label>
 				</React.Fragment>
 				
 			))}
