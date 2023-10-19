@@ -1,4 +1,5 @@
 <?php
+	require_once("database.php");
 
 	//Tillåt anslutning från samtliga med headers
 	header("Access-Control-Allow-Origin: *");
@@ -15,18 +16,6 @@
 	$hundId = $_POST['hundId'];
 	//Variabel med totalvärde som returneras till frontend
 	$totalValue = 0;
-
-	//Skapa anslutning till databas
-	$servername = "127.0.0.1";//"atlas.dsv.su.se";
-	$username = "root";//"usr_21321852";
-	$password = "#MyS4KOisaT1KK4";//"321852";
-	$db_name = "db_21321852";
-	$conn = new mysqli($servername, $username, $password, $db_name);
-	
-	//Kontrollera om anslutningen upprättats
-	if ($conn->connect_error) {
-	  die("Connection failed: " . $conn->connect_error);
-	}
 
 	//Kontrollera att egenskaper är en array, därefter hämta värden för respektive egenskap och addera medelvärde till totalvärde
 	if(is_array($egenskaper)) {
