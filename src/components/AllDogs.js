@@ -101,6 +101,7 @@ const Search = () => {
         };
         console.log(valueArray);
 
+        //Sortera array så att hund med högst rankingvärde hamnar först
         valueArray.sort((a, b) => {
             if (a.ranking > b.ranking) {
                 return -1;
@@ -110,16 +111,16 @@ const Search = () => {
             }
             return 0;
         });
+
+        //Ändra värde för ranking, högst värde får nytt värde 1 
         const newDisplayData = valueArray.map((item, index) => ({
             ...item,
             ranking: index + 1,
         }));
-        console.log(valueArray);
+        //Uppdatera state för datagrid
         setDisplayData(newDisplayData);
+        //Uppdatera sortering, visa rank 1 överst
         setSortModel([{ field: 'ranking', sort: 'asc' }]);
-
-        
-            
 
 
     };
