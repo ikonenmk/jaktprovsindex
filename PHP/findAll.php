@@ -1,34 +1,21 @@
 <?php
-
+	require_once("database.php");
 	//Tillåt anslutning från samtliga med headers
 	header("Access-Control-Allow-Origin: *");
 	header("Access-Control-Allow-Headers: *");
 
-
-		//Skapa anslutning till databas
-	$servername = "127.0.0.1";//"atlas.dsv.su.se";
-	$username = "root";//"usr_21321852";
-	$password = "#MyS4KOisaT1KK4";//"321852";
-	$db_name = "db_21321852";
-
-	$conn = new mysqli($servername, $username, $password, $db_name);
-	//Kontrollera om anslutningen upprättats
-	if ($conn->connect_error) {
-	  die("Connection failed: " . $conn->connect_error);
-	}
-
-	//Prepared statement som skickas till db
+	//Hämta all data från tabellen hundar i databasen
 	if($stmt = $conn->prepare("SELECT * FROM hundar")) {
 		//Genomför statement
 		$stmt->execute();
 
 		//bind resultat-variabler till prepared statement
-		$stmt->bind_result($id, $hund_regnr, $namn, $fodelsedatum, $skall, $sok, $ras);
+		$stmt->bind_result($id, $hund_regnr, $namn, $fodelsedatum, $ras, $prov_antal, $sok, $skall, $upptagsarbete, $vackning_pa_slag, $drevarbete, $vackning_pa_tappt, $skall_horbarhet, $skall_under_drev, $samarbete, $lydnad );
 
 		//Lägg samtliga prov som json-objekt i array
 		$responseArray = array();
 		while ($stmt->fetch()) {
-			$data = array("id" => $id, "hund_regnr" => $hund_regnr, "namn" => $namn, "fodelsedatum" => $fodelsedatum, "skall" => $skall, "sok" => $sok, "ras" => $ras);
+			$data = array("id" => $id, "hund_regnr" => $hund_regnr, "namn" => $namn, "fodelsedatum" => $fodelsedatum, "skall" => $skall, "sok" => $sok, "ras" => $ras, "antalProv" => $prov_antal, "upptagsarbete" => $upptagsarbete, "vackning_pa_slag" => $vackning_pa_slag, "drevarbete" => $drevarbete, "vackning_pa_tappt" => $vackning_pa_tappt, "skall_horbarhet" => $skall_horbarhet, "skall_under_drev" => $skall_under_drev, "samarbete" => $samarbete, "lydnad" => $lydnad);
 			array_push($responseArray, $data);
 		}
 		//Returnera array med json objekt
