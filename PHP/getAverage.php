@@ -9,7 +9,7 @@
 	$_POST = json_decode(file_get_contents("php://input"),true);
 
 	//Skapa array med tillåtna värden egenskap kan ta
-	$allowed_values = array('sok', 'skall');
+	$allowed_values = array('sok', 'skall', 'upptagsarbete', 'vackning_pa_slag', 'drevarbete', 'vackning_pa_tappt', 'skall_horbarhet', 'skall_under_drev', 'samarbete', 'lydnad');
 	//Egenskapsvariabel
 	$egenskaper = $_POST['egenskaper'];
 	//Hund-ID variabel
@@ -23,7 +23,7 @@
 
 	//Kontrollera att egenskap är tillåtet värde
 	if (in_array($egenskap, $allowed_values)) {
-	//Prepared statement
+	//Hämta egenskap från tabellen hunddata för specifikt regnr
 	if($stmt = $conn->prepare("SELECT $egenskap FROM hundar WHERE hund_regnr=?")) {
 		//Bind parametrar
 		$stmt->bind_param("s", $hundId);
@@ -56,7 +56,4 @@
 		$medeltal = array('average' => $totalValue);
 		header('Content-type: application/json');
 		echo json_encode($medeltal);
-
-	
-
 ?>

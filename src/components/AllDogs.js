@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+ï»¿import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { DataGrid } from '@mui/x-data-grid';
 //import { GridSortModel } from '@mui/x-data-grid';
@@ -6,35 +6,42 @@ import { DataGrid } from '@mui/x-data-grid';
 import { RankCheckbox } from "./RankCheckbox";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import "../App.css"
+import Button from 'react-bootstrap/Button';
+import NavBarTop from "./NavBarTop";
+import NavBarBottom from "./NavBarBottom";
+
+//HuvudgrÃ¤nssnittfÃ¶r att visa datan i databasen
+
+const AllDogs = () => {
 
 
-const Search = () => {
-
-    /** Use states */
-
-    //Use state för att spara värde för ikryssade boxar
+    //Use state fÃ¶r att spara vÃ¤rde fÃ¶r ikryssade boxar
     const [checkStatus, setCheckStatus] = useState([{ name: "sok", value: false }, { name: "skall", value: false }]);
+
+    //Hantera fÃ¶rÃ¤ndring av kryss i checkboxar
     const onCheckChange = (newCheckStatus) => {
         setCheckStatus(newCheckStatus);
     };
 
-    /** Use state för formulärdata */
-    const [formData, setFormData] = useState({
-        namn: "",
-        regnr: "",
-    });
 
-    //Use state för raddata
+    //Use state fÃ¶r initial raddata
     const [displayData, setDisplayData] = useState("");
+    useEffect(() => {
+        // Axios request here
+        axios.post("http://localhost:8000/findAll.php")
+            .then((response) => {
+                setDisplayData(response.data);
+            })
+            .catch((error) => {
+                console.error('Axios request error: ', error);
+            });
+    }, []);
 
-    //Use state för ras-dropdown
+    //Use state fÃ¶r ras-dropdown
     const [races, setRaces] = useState([{ name: "basset" }, {name: "cocker"}]);
 
-    //use state för totalvärde för egenskapsmedeltal
-
-    const [rankTotal, setRankTotal] = useState("0");
-
-    //use state för sortering av tabell
+    //use state fÃ¶r sortering av tabell
     const [sortModel, setSortModel] = useState([
         {
             field: 'hund_regnr',
@@ -42,26 +49,28 @@ const Search = () => {
         },
     ]);
 
-    /** ValueGetters för datagrid */
-
-
-    /** Column och row definitions för datagrid */
+    /** Column och row definitions fÃ¶r datagrid */
 
     const columns: GridColDef[] = [
-        { field: 'hund_regnr', headerName: 'Hund-ID', width: 150 },
-        { field: 'namn', headerName: 'namn', width: 150},
-        { field: 'sok', headerName: 'Sök (medel)', width: 150, type: 'number'},
-        { field: 'skall', headerName: 'Skall (medel)', width: 150, type: 'number' },
-        { field: 'ranking', headerName: 'Ranking', width: 150, type: 'number' },
+        { field: 'hund_regnr', headerName: 'Hund-ID', width: 100 },
+        { field: 'namn', headerName: 'namn', width: 100 },
+        { field: 'sok', headerName: 'SÃ¶k (medel)', width: 100, type: 'number'},
+        { field: 'skall', headerName: 'Skall (medel)', width: 100, type: 'number' },
+        { field: 'upptagsarbete', headerName: 'Upptagsarbete (medel)', width: 100, type: 'number' },
+        { field: 'vackning_pa_slag', headerName: 'VÃ¤ckning pÃ¥ slag', width: 100, type: 'number' },
+        { field: 'drevarbete', headerName: 'Drevarbete', width: 100, type: 'number' },
+        { field: 'vackning_pa_tappt', headerName: 'VÃ¤ckning pÃ¥ tappt', width: 100, type: 'number' },
+        { field: 'skall_horbarhet', headerName: 'Skall hÃ¶rbarhet', width: 100, type: 'number' },
+        { field: 'skall_under_drev', headerName: 'Skall under drev', width: 100, type: 'number' },
+        { field: 'samarbete', headerName: 'Samarbete', width: 100, type: 'number' },
+        { field: 'lydnad', headerName: 'Lydnad', width: 100, type: 'number' },
+        { field: 'ranking', headerName: 'Ranking', width: 100, type: 'number' },
     ];
 
 
-
-    //** Funktioner */
-
-    //Funktion för att hämta rankingvärde från backend
+    //Funktion fÃ¶r att hÃ¤mta rankingvÃ¤rde frÃ¥n backend
     const calculateRank = async (hundId, propertyNames) => { 
-        //objekt innehållandes arrayen propertyNames
+        //objekt innehÃ¥llandes arrayen propertyNames
         const queryArray = {
             egenskaper: propertyNames,
             hundId: hundId
@@ -75,17 +84,12 @@ const Search = () => {
         return resp.data.average;
     };
 
-
-
-    // *** Event handlers *** //
-
-
-    //Handler för att uppdatera rader vid klick på checkbox
+    //Handler fÃ¶r att uppdatera rader vid klick pÃ¥ checkbox
     const handleUpdateRow = async () => {
         
-        //Kontrollera vilka egenskaper som är ikryssade (d.v.s. har värdet true)
+        //Kontrollera vilka egenskaper som Ã¤r ikryssade (d.v.s. har vÃ¤rdet true)
         const pickedProperties = checkStatus.filter(item => item.value === true);
-        //skapa lokal array innehållandes endast egenskapsnamn för ikryssade egenskaper
+        //skapa lokal array innehÃ¥llandes endast egenskapsnamn fÃ¶r ikryssade egenskaper
         const propertyNames = pickedProperties.map((item) => {
             if (item.value === true) {
                 return item.name;
@@ -93,7 +97,7 @@ const Search = () => {
 
         });
 
-        /* test */
+        /* Ranking */
         const valueArray = [];
         for (var i = 0; i < displayData.length; i++) {
             const res = await calculateRank(displayData[i].hund_regnr, propertyNames);
@@ -101,7 +105,7 @@ const Search = () => {
         };
         console.log(valueArray);
 
-        //Sortera array så att hund med högst rankingvärde hamnar först
+        //Sortera array sÃ¥ att hund med hÃ¶gst rankingvÃ¤rde hamnar fÃ¶rst
         valueArray.sort((a, b) => {
             if (a.ranking > b.ranking) {
                 return -1;
@@ -112,24 +116,25 @@ const Search = () => {
             return 0;
         });
 
-        //Ändra värde för ranking, högst värde får nytt värde 1 
+        //Ã„ndra vÃ¤rde fÃ¶r ranking, hÃ¶gst vÃ¤rde fÃ¥r nytt vÃ¤rde 1 
         const newDisplayData = valueArray.map((item, index) => ({
             ...item,
             ranking: index + 1,
         }));
-        //Uppdatera state för datagrid
+        //Uppdatera state fÃ¶r datagrid
         setDisplayData(newDisplayData);
-        //Uppdatera sortering, visa rank 1 överst
+        //Uppdatera sortering, visa rank 1 Ã¶verst
         setSortModel([{ field: 'ranking', sort: 'asc' }]);
 
 
     };
-    // Hantera förändring av data
+    // Hantera fÃ¶rÃ¤ndring av data baserat pÃ¥ ras-dropdown
     const updateDogData = (hundras) => {
 
             axios
                 .post("http://localhost:8000/findRace.php", {ras: hundras})
                 .then((response) => {
+                    console.log(response.data);
                     setDisplayData(response.data);
                 })
                 .catch((error) => {
@@ -142,38 +147,38 @@ const Search = () => {
 
     return (
         <>
-            
-            <div>
-                <RankCheckbox onCheckChange={onCheckChange} />
-            </div>
-            <div>
-                <DropdownButton id="dropdown-basic-button" title="Dropdown button">
-                    {races.map((item) => (
-                        <Dropdown.Item onClick={() => updateDogData(item.name)}> { item.name } </Dropdown.Item>
-                    ))};
-                </DropdownButton>
-            </div>
-            <div>
-                <ul>
-                    {checkStatus.map(item => {
-                        return <li>{item.name}</li>;
-                    })}
-                </ul>
-                <button size="small" onClick={() => handleUpdateRow()}>
-                    Update a row
-                </button>
-            </div>
 
-            <div style={{ height: 300, width: '100%' }}>
-                <DataGrid
-                    rows={displayData}
-                    columns={columns}
-                    sortModel={sortModel}
-                />
+            <div class="container">
+                <div class="dropDownButtonContainer">
+                    <div class="dropDownButtonElement">
+                        <DropdownButton id="dropdown-basic-button" title="VÃ¤lj ras" variant="success">
+                            {races.map((item) => (
+                                <Dropdown.Item onClick={() => updateDogData(item.name)}> {item.name} </Dropdown.Item>
+                            ))};
+                        </DropdownButton>
+                    </div>
+                </div>
+               
+                <div class="rankCheckBoxContainer">
+                        <RankCheckbox onCheckChange={onCheckChange} />
+                </div>
+                <div class="rankButtonContainer">
+                    <Button size="small" variant="success" onClick={() => handleUpdateRow()}>
+                        Uppdatera ranking
+                    </Button>
+                </div>
+                <div class="gridContainer">
+                    <DataGrid
+                        rows={displayData}
+                        columns={columns}
+                        sortModel={sortModel}
+                    />
+                </div>
+                <NavBarBottom />
             </div>
         </>
 
     );
 };
 
-export default Search;
+export default AllDogs;

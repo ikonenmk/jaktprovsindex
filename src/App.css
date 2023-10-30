@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+
+
+.dropDownButtonContainer {
+    width: 100%;
+    background-color: lightgray;
+    margin-top: 10px;
+}
+.dropDownButtonElement {
+   padding: 10px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.rankCheckBoxContainer {
+    width: 100%;
+    margin-top: 10px;
+    background-color: lightgray;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.rankCheckBoxItem {
+    float: left;
+    padding: 10px;
+    background-color: lightgray;
+}
+.rankButtonContainer {
+    padding-bottom: 20px;
+    padding-left: 20px;
+    background-color: lightgray;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.gridContainer {
+    margin-top: 10px;
+    height: 100%;
+    width: 100%;
+    background-color: lightgray;
 }
 
-.App-link {
-  color: #61dafb;
+label {
+    padding: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+body, html {
+    background: url("../img/background.jpg") no-repeat center fixed;
+    background-size: cover;
+}
+
+.container {
+    width: 70%;
+    padding: 20px;
+}
+
+.error {
+    background-color: lightgray;
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.inputField {
+}
+
+.textInput {
+    background-color: lightgray;
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-bottom:20px;
+    width: 20%;
+    height: 80%;
+}
+
+.textInputContainer {
+    background-color: lightgray;
+    
+    margin: 20px;
+}
+
+.selectContainer {
+    padding: 20px;
+    margin: 20px;
+    background-color: lightgray;
+}
+
+.saveProvButtonContainer {
+    padding: 20px;
+}
+
+.selectbutton {
 }
