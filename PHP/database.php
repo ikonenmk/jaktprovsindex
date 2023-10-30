@@ -1,9 +1,9 @@
 <?php
 //Databaskoppling som krävs i övriga filer som hanterar databasdata
-	$servername = "127.0.0.1";//"atlas.dsv.su.se";
-	$username = "root";//"usr_21321852";
-	$password = "#MyS4KOisaT1KK4";//"321852";
-	$db_name = "db_21321852";
+	$servername = "*";
+	$username = "*";
+	$password = "#*";
+	$db_name = "*";
 
 	$conn = new mysqli($servername, $username, $password, $db_name);
 	
