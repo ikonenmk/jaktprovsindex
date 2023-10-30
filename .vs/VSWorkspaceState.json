@@ -1,10 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\img",
     "\\PHP",
+    "\\public",
     "\\src",
-    "\\src\\components"
+    "\\src\\img"
   ],
-  "SelectedNode": "\\src\\components\\RankCheckbox.js",
+  "SelectedNode": "\\src",
   "PreviewInSolutionExplorer": false
 }

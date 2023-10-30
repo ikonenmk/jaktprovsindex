@@ -1,8 +1,8 @@
 <?php
-//Databaskoppling som krävs i övriga filer som hanterar databasdata
+//Databaskoppling som krävs i övriga filer som hanterar databas data
 	$servername = "*";
 	$username = "*";
-	$password = "#*";
+	$password = "*";
 	$db_name = "*";
 
 	$conn = new mysqli($servername, $username, $password, $db_name);

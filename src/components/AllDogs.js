@@ -24,22 +24,34 @@ const AllDogs = () => {
         setCheckStatus(newCheckStatus);
     };
 
+    //Use state för ras-dropdown
+    const [races, setRaces] = useState([]);
+
 
     //Use state för initial raddata
     const [displayData, setDisplayData] = useState("");
     useEffect(() => {
-        // Axios request here
+        //
+        const oldRaces = [...races]; //Array för att uppdatera races
+        //Hämta alla raser
         axios.post("http://localhost:8000/findAll.php")
             .then((response) => {
                 setDisplayData(response.data);
+
+               const allRaces = response.data.map((item) => {
+                    const containsRace = oldRaces.some(arrayItem => arrayItem.name === item.ras);
+                    if (!containsRace) {
+                        console.log(item.ras);
+                        oldRaces.push( { name: item.ras } );
+                    }
+               });
+                setRaces(oldRaces);
+                
             })
             .catch((error) => {
                 console.error('Axios request error: ', error);
             });
     }, []);
-
-    //Use state för ras-dropdown
-    const [races, setRaces] = useState([{ name: "basset" }, {name: "cocker"}]);
 
     //use state för sortering av tabell
     const [sortModel, setSortModel] = useState([

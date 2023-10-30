@@ -5,6 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Login from "./Login";
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import picture from "../img/dog.png"
 
 function NavBarTop() {
 
@@ -77,7 +78,7 @@ function NavBarTop() {
     return (
         <Container>
             <Navbar expand="lg" className="bg-body-tertiary" bg="primary" data-bs-theme="dark" fixed="top">
-                <Navbar.Brand href="/AllDogs">Jämför jakthundar</Navbar.Brand>
+                <Navbar.Brand href="/AllDogs"> <img src={picture} /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                

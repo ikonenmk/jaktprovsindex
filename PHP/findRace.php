@@ -15,7 +15,7 @@
 		$stmt->execute();
 
 		//bind resultat-variabler till prepared statement
-		$stmt->bind_result($id_hundar, $hund_regnr, $namn, $fodelsedatum, $skall, $sok, $ras, $prov_antal, $upptagsarbete, $vackning_pa_slag, $drevarbete, $vackning_pa_tappt, $skall_horbarhet, $skall_under_drev, $samarbete, $lydnad);
+		$stmt->bind_result($id_hundar, $hund_regnr, $namn,$fodelsedatum, $skall, $sok, $ras ,$prov_antal, $upptagsarbete, $vackning_pa_slag, $drevarbete, $vackning_pa_tappt, $skall_horbarhet, $skall_under_drev, $samarbete, $lydnad );
 
 		//Lägg samtliga prov som json-objekt i array
 		$responseArray = array();
