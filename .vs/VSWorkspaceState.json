@@ -5,8 +5,9 @@
     "\\PHP",
     "\\public",
     "\\src",
+    "\\src\\components",
     "\\src\\img"
   ],
-  "SelectedNode": "\\src",
+  "SelectedNode": "\\PHP\\database.php",
   "PreviewInSolutionExplorer": false
 }
