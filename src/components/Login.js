@@ -33,10 +33,8 @@ function Login({ handleLogin }) {
     }
 
     const handleInput = (e) => {
-        console.log(e.target.value);
         const updatedFormData = { ...formData };
         updatedFormData[e.target.name] = e.target.value;
-        console.log(updatedFormData);
         setFormData(updatedFormData);
     }
     return (
@@ -45,7 +43,7 @@ function Login({ handleLogin }) {
                  <p>Användarnamn:</p>
                 <input type="text" name="username" onChange={ handleInput }></input>
                  <p>Lösenord:</p>
-                <input type="text" name="password" onChange={ handleInput }></input>
+                <input type="password   " name="password" onChange={ handleInput }></input>
                  <button onClick={handleSubmit}>Logga in</button>
             </form>
                 { errorMsg && <div>{errorMsg}</div> }

@@ -132,10 +132,10 @@ function AddResult() {
                 {propertyErrorMsg && <div className="error">{propertyErrorMsg}</div>}
                     <div class="saveProvButtonContainer">
                         {!saved &&
-                            <Button variant="secondary" size="small" onClick={handleSubmit}> Spara prov </Button>
+                            <Button variant="dark" size="lg" onClick={handleSubmit}> Spara prov </Button>
                         }
                         {saved &&
-                            <Button variant="success" size="small" onClick={handleNextProv}> Prov sparat. Lägg till ett till prov </Button>
+                            <Button variant="success" size="lg" onClick={handleNextProv}> Prov sparat. Lägg till ett till prov </Button>
                         }
                 </div>
                 </form>

@@ -1,22 +1,23 @@
 ﻿import React from 'react';
 import { useState } from "react";
-
+import Form from 'react-bootstrap/Form';
+import "../App.css"
 
 
 export const RankCheckbox = ({ onCheckChange }) => {
 
 	// Array innehållandes alla möjliga värden användaren kan välja för att generera ranking
 	const [userChoices, setUserChoices] = useState([
-		{ name: "sok", value: false },
-		{ name: "skall", value: false },
-		{ name: "upptagsarbete", value: false },
-		{ name: "vackning_pa_slag", value: false },
-		{ name: "drevarbete", value: false },
-		{ name: "vackning_pa_tappt", value: false },
-		{ name: "skall_horbarhet", value: false },
-		{ name: "skall_under_drev", value: false },
-		{ name: "samarbete", value: false },
-		{ name: "lydnad", value: false },
+		{ title: "Sök", name: "sok", value: false },
+		{ title: "Skall", name: "skall", value: false },
+		{ title: "Upptagsarbete", name: "upptagsarbete", value: false },
+		{ title: "Väckning på slag", name: "vackning_pa_slag", value: false },
+		{ title: "Drevarbete", name: "drevarbete", value: false },
+		{ title: "Väckning på tappt", name: "vackning_pa_tappt", value: false },
+		{ title: "Hörbarhet (skall)", name: "skall_horbarhet", value: false },
+		{ title: "Skall under drev", name: "skall_under_drev", value: false },
+		{ title: "Samarbete", name: "samarbete", value: false },
+		{ title: "Lydnad", name: "lydnad", value: false },
 	]);
 
 	// Handler för klick i checkbox
@@ -39,15 +40,15 @@ export const RankCheckbox = ({ onCheckChange }) => {
 		onCheckChange(updatedCheckedState);				//Uppdatera parent (Search) state
 	}
 	return (
-			<div>
+		<>
 			{userChoices.map((item, index) => (
 				<React.Fragment key={index}>
 					<div class="rankCheckBoxItem">
-						<input type="checkbox" id={`checkbox-${index}`} checked={item.value} onChange={() => checkHandler(item.name)} /><label htmlFor={`checkbox-${index}`}> {item.name} </label>
+						<Form.Check id={`checkbox-${index}`} checked={item.value} onChange={() => checkHandler(item.name)} label={item.title}  data-bs-theme="dark" />
 					</div>
 				</React.Fragment>
 				
 			))}
-			</div>
+			</>
 	)
 }

@@ -2,35 +2,46 @@
 
 .dropDownButtonContainer {
     width: 100%;
-    background-color: lightgray;
+    background-color: #343a40;
     margin-top: 10px;
+    color: white;
+    box-shadow: 10px 10px 5px black;
 }
 .dropDownButtonElement {
    padding: 10px;
+   color: white;
 }
 
 .rankCheckBoxContainer {
+    padding: 10px;
     width: 100%;
-    margin-top: 10px;
-    background-color: lightgray;
+    background-color: #343a40;
+    color: white;
+    box-shadow: 10px 10px 5px black;
 }
 
 .rankCheckBoxItem {
-    float: left;
-    padding: 10px;
-    background-color: lightgray;
+    padding: 5px;
+    background-color: #343a40;
+    display: inline-grid;
 }
 .rankButtonContainer {
-    padding-bottom: 20px;
-    padding-left: 20px;
-    background-color: lightgray;
+    clear: left;
+    padding: 10px;
+    background-color: #343a40;
+    box-shadow: 10px 10px 5px black;
 }
 
 .gridContainer {
-    margin-top: 10px;
+    margin-top: 20px;
     height: 100%;
     width: 100%;
-    background-color: lightgray;
+    background-color: #343a40;
+    box-shadow: 10px 10px 5px black;
+}
+
+gridColumnHeader {
+    color: white;
 }
 
 label {
@@ -40,6 +51,7 @@ label {
 body, html {
     background: url("../img/background.jpg") no-repeat center fixed;
     background-size: cover;
+    background-color: #343a40;
 }
 
 .container {
@@ -48,41 +60,46 @@ body, html {
 }
 
 .error {
-    background-color: lightgray;
+    color: white;
+    background-color: #343a40;
     padding: 10px;
     margin-left: 20px;
     margin-right: 20px;
+    box-shadow: 10px 10px 5px black;
 }
 .inputField {
 }
 
 .textInput {
-    background-color: lightgray;
+    background-color: #212529;
+    color: white;
     margin-top: 20px;
     margin-left: 40px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
     width: 20%;
     height: 80%;
 }
 
 .textInputContainer {
-    background-color: lightgray;
-    
+    background-color: #343a40;
     margin: 20px;
 }
 
 .selectContainer {
     padding: 20px;
     margin: 20px;
-    background-color: lightgray;
+    background-color: #343a40;
+    display: grid;
+    box-shadow: 10px 10px 5px black;
 }
 
 .saveProvButtonContainer {
-    padding: 20px;
+    margin-top: 15px;
+    margin-left: 20px;
+
+
 }
 
-.selectbutton {
-}
 
 .logoPic {
     width: 15%;

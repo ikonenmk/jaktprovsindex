@@ -8,10 +8,15 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import "../App.css"
 import Button from 'react-bootstrap/Button';
-import NavBarTop from "./NavBarTop";
 import NavBarBottom from "./NavBarBottom";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
+
 
 //Huvudgränssnittför att visa datan i databasen
+
+
 
 const AllDogs = () => {
 
@@ -64,19 +69,19 @@ const AllDogs = () => {
     /** Column och row definitions för datagrid */
 
     const columns: GridColDef[] = [
-        { field: 'hund_regnr', headerName: 'Hund-ID', width: 100 },
-        { field: 'namn', headerName: 'namn', width: 100 },
-        { field: 'sok', headerName: 'Sök (medel)', width: 100, type: 'number'},
-        { field: 'skall', headerName: 'Skall (medel)', width: 100, type: 'number' },
-        { field: 'upptagsarbete', headerName: 'Upptagsarbete (medel)', width: 100, type: 'number' },
-        { field: 'vackning_pa_slag', headerName: 'Väckning på slag', width: 100, type: 'number' },
-        { field: 'drevarbete', headerName: 'Drevarbete', width: 100, type: 'number' },
-        { field: 'vackning_pa_tappt', headerName: 'Väckning på tappt', width: 100, type: 'number' },
-        { field: 'skall_horbarhet', headerName: 'Skall hörbarhet', width: 100, type: 'number' },
-        { field: 'skall_under_drev', headerName: 'Skall under drev', width: 100, type: 'number' },
-        { field: 'samarbete', headerName: 'Samarbete', width: 100, type: 'number' },
-        { field: 'lydnad', headerName: 'Lydnad', width: 100, type: 'number' },
-        { field: 'ranking', headerName: 'Ranking', width: 100, type: 'number' },
+        { field: 'hund_regnr', headerName: 'Hund-ID', width: 100, headerClassName: 'gridColumnHeader' },
+        { field: 'namn', headerName: 'namn', width: 100, headerClassName: 'gridColumnHeader' },
+        { field: 'sok', headerName: 'Sök (medel)', width: 100, type: 'number', headerClassName: 'gridColumnHeader'},
+        { field: 'skall', headerName: 'Skall (medel)', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'upptagsarbete', headerName: 'Upptagsarbete (medel)', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'vackning_pa_slag', headerName: 'Väckning på slag', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'drevarbete', headerName: 'Drevarbete', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'vackning_pa_tappt', headerName: 'Väckning på tappt', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'skall_horbarhet', headerName: 'Skall hörbarhet', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'skall_under_drev', headerName: 'Skall under drev', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'samarbete', headerName: 'Samarbete', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'lydnad', headerName: 'Lydnad', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
+        { field: 'ranking', headerName: 'Ranking', width: 100, type: 'number', headerClassName: 'gridColumnHeader' },
     ];
 
 
@@ -156,6 +161,8 @@ const AllDogs = () => {
         
     };
 
+    //Tema för datagrid styling
+    const theme = createTheme();
 
     return (
         <>
@@ -163,29 +170,54 @@ const AllDogs = () => {
             <div class="container">
                 <div class="dropDownButtonContainer">
                     <div class="dropDownButtonElement">
-                        <DropdownButton id="dropdown-basic-button" title="Välj ras" variant="success">
+                        <DropdownButton id="dropdown-basic-button" title="Välj ras" variant="secondary" data-bs-theme="dark">
                             {races.map((item) => (
                                 <Dropdown.Item onClick={() => updateDogData(item.name)}> {item.name} </Dropdown.Item>
                             ))};
                         </DropdownButton>
                     </div>
                 </div>
-               
+
                 <div class="rankCheckBoxContainer">
-                        <RankCheckbox onCheckChange={onCheckChange} />
+                    <RankCheckbox onCheckChange={onCheckChange} />
                 </div>
+
                 <div class="rankButtonContainer">
-                    <Button size="small" variant="success" onClick={() => handleUpdateRow()}>
+                    <Button size="small" variant="secondary" onClick={() => handleUpdateRow()}>
                         Uppdatera ranking
                     </Button>
                 </div>
+                <ThemeProvider theme={theme}>
                 <div class="gridContainer">
                     <DataGrid
                         rows={displayData}
                         columns={columns}
                         sortModel={sortModel}
-                    />
+                        sx={{
+                            boxShadow: 2,
+                            border: 2,
+                            borderColor: 'transparent',
+                            '& .gridColumnHeader': {
+                                color: 'white',
+                            },
+                            '& .MuiDataGrid-cell': {
+                                color: 'white',
+                            },
+                            '& .MuiDataGrid-cell:hover': {
+                                color: 'primary.light',
+                            }  
+                        }}
+                        componentsProps={{
+                            pagination: {
+                                labelRowsPerPage: "Antal rader per sida",
+                                style: {
+                                    color: 'white',
+                                },
+                            }
+                        }}
+                        />
                 </div>
+                </ThemeProvider>
                 <NavBarBottom />
             </div>
         </>
