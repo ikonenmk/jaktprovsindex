@@ -1,6 +1,6 @@
 <?php
 //Databaskoppling som krävs i övriga filer som hanterar databas data
-	$servername = "*";
+	$servername = "";
 	$username = "";
 	$password = "";
 	$db_name = "";

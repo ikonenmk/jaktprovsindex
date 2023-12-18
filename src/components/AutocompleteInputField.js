@@ -2,6 +2,10 @@
 import axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Stack from 'react-bootstrap/Stack';
 
 //Komponent för input av data i addResult.js
 const AutocompleteInputField = ({ handleNewInput }) => {
@@ -14,7 +18,6 @@ const AutocompleteInputField = ({ handleNewInput }) => {
             await axios
                 .post("http://localhost:8000/findAll.php")
                 .then((response) => {
-                    console.log(response.data);
                     response.data.map((item) => {
                         newHundar.push(item);
                     });
@@ -26,7 +29,6 @@ const AutocompleteInputField = ({ handleNewInput }) => {
         }
         fetchData();
     }, []);
-    console.log(options);
 
     //För att göra namn input element read only
     const [isReadOnlyName, setIsReadOnlyName] = useState(false);
@@ -70,6 +72,8 @@ const AutocompleteInputField = ({ handleNewInput }) => {
     
     //Hantera förändring av input
     const handleInputChange = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.value);
         const { name, value } = e.target;
         const newInputValue = [];
         //Kontrollera om hund_regnr finns i databasen och tillåt endast fortsatt input om det finns
@@ -98,60 +102,74 @@ const AutocompleteInputField = ({ handleNewInput }) => {
 
     return (
         <>
-        <div class="textInputContainer">
-                <input
-                    class="textInput"
-                    type="text"
-                    placeholder="Sök efter Reg nr"
-                    value={inputValue.hund_regnr}
-                    onChange={handleInputChange}
-                    list="hundar_regnr"
-                    name="hund_regnr"
-                />
-                <datalist id="hundar_regnr">
-                    {options.map((option) => (
-                        <option key={option.id} value={option.hund_regnr} />
-                    ))}
-                </datalist>
-                <input
-                    class="textInput"
-                    type="text"
-                    placeholder="namn"
-                    value={inputValue.namn}
-                    onChange={handleInputChange}
-                    name="namn"
-                    readOnly={isReadOnlyName}
-                />
-                <input type="text"
-                    class="textInput"
-                    placeholder="datum"
-                    value={inputValue.datum}
-                    onChange={handleInputChange}
-                    name="datum"
-                    readOnly={isReadOnlyProperties}
-                />
-                </div>
             <div class="selectContainer">
-                <div class="selectButton">
-                {filteredOptionsList.map((item, index) => (
-                   
-                    <Select name={item}
-                        key={`inputField-${index}`}
-                        onChange={handleInputChange}
-                        defaultValue={item}
-                        disabled={isReadOnlyProperties}
-                    >
-                        <MenuItem value={item}> {item}</MenuItem>
-                        <MenuItem value={0}>0</MenuItem>
-                        <MenuItem value={1}>1</MenuItem>
-                        <MenuItem value={2}>2</MenuItem>
-                        <MenuItem value={3}>3</MenuItem>
-                        <MenuItem value={4}>4</MenuItem>
-                        <MenuItem value={5}>5</MenuItem>
-                        </Select>
-                    
-                ))}
-                </div>
+                    <Form>
+                    <Row>
+                        <Col>
+                            <Stack gap={2} direction="horizontal" className="mb-2">
+
+                                <datalist id="hundar_regnr">
+                                    {options.map((option) => (
+                                        <option key={option.id} value={option.hund_regnr} />
+                                    ))}
+                                </datalist>
+
+                                <Form.Control
+                                    class="textInput"
+                                    type="text"
+                                    placeholder="Sök efter Reg nr"
+                                    value={inputValue.hund_regnr}
+                                    onChange={handleInputChange}
+                                    list="hundar_regnr"
+                                    name="hund_regnr"
+                                    data-bs-theme="dark"
+                                />
+                                <Form.Control
+                                    class="textInput"
+                                    type="text"
+                                    placeholder="namn"
+                                    value={inputValue.namn}
+                                    onChange={handleInputChange}
+                                    name="namn"
+                                    disabled={isReadOnlyName}
+                                    data-bs-theme="dark"
+                                />
+                                <Form.Control
+                                    type="text"
+                                    class="textInput"
+                                    placeholder="datum"
+                                    value={inputValue.datum}
+                                    onChange={handleInputChange}
+                                    name="datum"
+                                    disabled={isReadOnlyProperties}
+                                    data-bs-theme="dark"
+                                />
+                            </Stack>         
+                            {filteredOptionsList.map((item, index) => (
+                             <Col xs="auto">
+                                 <Form.Select aria-label="Default select example"
+                                    key={`inputField-${index}`}
+                                    onChange={handleInputChange}
+                                    defaultValue={item}
+                                    disabled={isReadOnlyProperties}
+                                    name={item}
+                                    data-bs-theme="dark"
+                                    className="mb-2"
+                                    >
+                                    <option>{item}</option>
+                                    <option value={0}>0</option>
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                    <option value={4}>4</option>
+                                    <option value={5}>5</option>
+                                 </Form.Select>
+                             </Col>
+                            ))}
+                        </Col>
+                        </Row>
+                </Form>
+               
             </div>
         </>
     );
