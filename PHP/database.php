@@ -1,9 +1,9 @@
 <?php
 //Databaskoppling som krävs i övriga filer som hanterar databas data
-	$servername = "127.0.0.1";
-	$username = "root";
-	$password = "#MyS4KOisaT1KK4";
-	$db_name = "db_21321852";
+	$servername = "";
+	$username = "";
+	$password = "";
+	$db_name = "";
 
 	$conn = new mysqli($servername, $username, $password, $db_name);
 	
