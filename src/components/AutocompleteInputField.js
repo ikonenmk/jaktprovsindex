@@ -131,7 +131,7 @@ const AutocompleteInputField = ({ handleNewInput }) => {
                                     value={inputValue.namn}
                                     onChange={handleInputChange}
                                     name="namn"
-                                    disabled={isReadOnlyName}
+                                    disabled
                                     data-bs-theme="dark"
                                 />
                                 <Form.Control
