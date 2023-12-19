@@ -24,7 +24,7 @@
 			$stmt->bind_result($username,$hashed_password, $role);
 			 $stmt->fetch(); // Fetch the data from the result.
 			
-			if (password_verify($posted_password, $hashed_password)) { //Check if password is correct
+			if (password_verify($posted_password, $hashed_password)) { //Kontrollera lösenord
 			$userArray = array('username' => $username, 'role' => $role);
 
 		
@@ -39,11 +39,11 @@
 			echo json_encode($userArray);
 
 		} else {
-			// Password is incorrect
+			// Lösenord felaktigt
 			echo "Username or password is wrong";
 		}
 	} else {
-		// User does not exist
+		// Användaren existerar inte
 		echo "Username or password is wrong";
 	}
 	$stmt->close();
